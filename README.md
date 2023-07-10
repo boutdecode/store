@@ -1,4 +1,4 @@
-# Session tools by Bout de code
+# I18N tools by Bout de code
 
 ![https://boutdecode.fr](https://boutdecode.fr/img/logo.png)
 
@@ -7,37 +7,42 @@
 ## Installation
 
 ```shell
-$ npm install @boutdecode/session
+$ npm install @boutdecode/i18n
 ```
 
 ## Yion plugin
 
 For yion : 
 
+Before, add env variable
+```.env
+LOCALE=fr // Default locale
+TRANSLATION_FOLDER=/translations
+```
+
+Next create translation files like : 
+
+`whatever.<lang>.json|js`
+
+Example :
+
+```
+/translations
+  messages.en.json
+  messages.fr.json
+```
+
+Finally
+
 ```javascript
 const { createApp, createServer } = require('@boutdecode/yion')
-const sessionPlugin = require('@boutdecode/session/yion/session-plugin')
+const i18n = require('@boutdecode/session/yion/i18n-plugin')
 
 const app = createApp()
-const server = createServer(app, [sessionPlugin])
+const server = createServer(app, [i18n])
 
 app.get('/', (req, res) => {
-    req.session // Current session
-})
-
-app.post('/login', (req, res) => {
-    // ... do sign in
-    
-    req.session.user = user
-    req.session.keep(24 * 60 * 60) // Keep session open for 24h
-})
-
-app.get('/admin', (req, res) => {
-    if (req.session.user) {
-        // Connected !
-    }
-    
-    res.redirect('/login')
+    req.attributes.locale // Current locale, null if not detected
 })
 
 server.listen(8080)
