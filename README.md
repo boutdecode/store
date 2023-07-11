@@ -36,10 +36,10 @@ Finally
 
 ```javascript
 const { createApp, createServer } = require('@boutdecode/yion')
-const i18n = require('@boutdecode/session/yion/i18n-plugin')
+const i18nPlugin = require('@boutdecode/i18n/yion/i18n-plugin')
 
 const app = createApp()
-const server = createServer(app, [i18n])
+const server = createServer(app, [i18nPlugin])
 
 app.get('/', (req, res) => {
     req.attributes.locale // Current locale, null if not detected
