@@ -27,19 +27,20 @@ const getTranslations = () => {
   return translations
 }
 
+const fallbackLng = process.env.LOCALE || 'en'
 module.exports = {
   type: 'i18n',
   handle: (req, res, app, next) => {
     if (!isInit) {
       i18next.init({
-        fallbackLng: process.env.LOCALE || 'en',
+        fallbackLng,
         resources: getTranslations()
       })
 
       isInit = true
     }
 
-    req.attributes.locale = parseLocale.pick(i18next.languages, req.headers['accept-language'])
+    req.attributes.locale = parseLocale.pick(i18next.languages, req.headers['accept-language']) || fallbackLng
 
     const match = req.url.match(/\/([a-z]{2}(?:-[a-z]{2})?)\/.*/)
     if (match) {
