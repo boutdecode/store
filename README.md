@@ -1,4 +1,4 @@
-# I18N tools by Bout de code
+# Store tools by Bout de code
 
 ![https://boutdecode.fr](https://boutdecode.fr/img/logo.png)
 

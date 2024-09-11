@@ -5,12 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "npm run cs",
-    "fix-cs": "eslint --fix yion index.js",
-    "cs": "eslint yion index.js"
+    "fix-cs": "eslint --fix plugins providers index.js",
+    "cs": "eslint plugins providers index.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/boutdecode/i18n.git"
+    "url": "git+https://github.com/boutdecode/store.git"
   },
   "author": "Kevin Balicot <kevinbalicot@gmail.com>",
   "license": "MIT",
