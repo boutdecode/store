@@ -1,6 +1,6 @@
-const {randomUUID} = require('crypto')
-const {resolve} = require('node:path')
-const {Database} = require('sqlite3')
+const { randomUUID } = require('crypto')
+const { resolve } = require('node:path')
+const { Database } = require('sqlite3')
 
 module.exports = ({ dbname, folder = 'data' } = {}) => {
   const storePath = resolve(process.cwd(), folder)
@@ -9,6 +9,7 @@ module.exports = ({ dbname, folder = 'data' } = {}) => {
       throw err
     }
 
+    // eslint-disable-next-line no-console
     console.log(`💾 Database "${dbname}" connected.`)
   })
 
@@ -149,7 +150,7 @@ module.exports = ({ dbname, folder = 'data' } = {}) => {
       page = 1,
       limit = 100,
       sort = { updatedAt: 'DESC', createdAt: 'DESC' },
-      options = {operator: '=', logic: 'AND'}
+      options = { operator: '=', logic: 'AND' }
     ) {
       const sql = `
         SELECT * FROM ${table}
@@ -182,14 +183,14 @@ module.exports = ({ dbname, folder = 'data' } = {}) => {
      * @param {object} options
      * @returns {Promise<*>}
      */
-    count (table, query = {}, options = {operator: '=', logic: 'AND'}) {
+    count (table, query = {}, options = { operator: '=', logic: 'AND' }) {
       const sql = `
         SELECT COUNT(*) AS count FROM ${table}
         ${Object.keys(query).length ? 'WHERE' : ''} ${Object.keys(query).map(key => `${key} ${options.operator} ?`).join(` ${options.logic} `)}
       `
 
       return new Promise((resolve, reject) => {
-        this.db.get(sql, Object.values(query), (err, {count}) => {
+        this.db.get(sql, Object.values(query), (err, { count }) => {
           if (err) {
             return reject(err)
           }
@@ -214,8 +215,8 @@ module.exports = ({ dbname, folder = 'data' } = {}) => {
       query = {},
       page = 1,
       limit = 10,
-      sort = {updatedAt: 'DESC', createdAt: 'DESC'},
-      options = {operator: '=', logic: 'AND'}
+      sort = { updatedAt: 'DESC', createdAt: 'DESC' },
+      options = { operator: '=', logic: 'AND' }
     ) {
       return {
         data: await this.find(table, query, page, limit, sort, options),
