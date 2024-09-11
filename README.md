@@ -7,42 +7,41 @@
 ## Installation
 
 ```shell
-$ npm install @boutdecode/i18n
+$ npm install @boutdecode/store
 ```
 
-## Yion plugin
-
-For yion : 
-
-Before, add env variable
-```.env
-LOCALE=fr // Default locale
-TRANSLATION_FOLDER=/translations
-```
-
-Next create translation files like : 
-
-`whatever.<lang>.json|js`
-
-Example :
-
-```
-/translations
-  messages.en.json
-  messages.fr.json
-```
-
-Finally
+## Usage
 
 ```javascript
 const { createApp, createServer } = require('@boutdecode/yion')
-const i18nPlugin = require('@boutdecode/i18n/yion/i18n-plugin')
+const { plugin, providers } = require('@boutdecode/store')
 
 const app = createApp()
-const server = createServer(app, [i18nPlugin])
+const server = createServer(app)
 
-app.get('/', (req, res) => {
-    req.attributes.locale // Current locale, null if not detected
+app.use(plugin({ dbname: 'data', provider: providers.sqlite }))
+
+let migrated = false
+app.use(async ({ store }, next) => {
+  if (migrated) {
+    return next()
+  }
+  
+  await store.run(`
+    CREATE TABLE IF NOT EXISTS items (
+      id TEXT PRIMARY KEY,
+      name TEXT NOT NULL
+   )`)
+
+  migrated = true
+
+  next()
+})
+
+app.get('/items', async ({ req, res, store }) => {
+  const item = await store.findOne('items', { id: 1 })
+  
+  res.json(item)
 })
 
 server.listen(8080)

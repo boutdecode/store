@@ -1,7 +1,7 @@
-const i18next = require('i18next')
-
 module.exports = {
-  trans (code, options = {}) {
-    return i18next.t(code, options)
+  plugin: require('./plugins/store'),
+  providers: {
+    nedb: require('./providers/nedb'),
+    sqlite: require('./providers/sqlite')
   }
 }
