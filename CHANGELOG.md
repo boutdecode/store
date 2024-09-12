@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/boutdecode/store/compare/v1.0.0...v1.0.1) (2024-09-12)
+
+
+### Bug Fixes
+
+* Dep error ([9eb4706](https://github.com/boutdecode/store/commit/9eb470665c2b44c0778c61df1c1b164b3835c521))
+
 # 1.0.0 (2024-09-11)
 
 
