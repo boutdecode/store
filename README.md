@@ -19,7 +19,7 @@ const { plugin, providers } = require('@boutdecode/store')
 const app = createApp()
 const server = createServer(app)
 
-app.use(plugin({ dbname: 'data', provider: providers.sqlite }))
+app.use(plugin({ dbname: 'data', provider: providers.sqlite() }))
 
 let migrated = false
 app.use(async ({ store }, next) => {
